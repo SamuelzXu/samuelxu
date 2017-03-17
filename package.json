@@ -1,0 +1,28 @@
+{
+  "name": "samuelxu",
+  "version": "1.0.0",
+  "author": "Samuel Xu",
+  "main": "app.js",
+  "dependencies": {
+    "body-parser": "~1.13.2",
+    "cookie-parser": "~1.3.5",
+    "debug": "~2.2.0",
+    "express": "~4.7.1",
+    "mongodb": "~2.2.19",
+    "mongoose": "~3.6.2",
+    "morgan": "~1.6.1",
+    "serve-favicon": "~2.3.0",
+    "sendgrid": "^4.2.0"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node app.js"
+  },
+  "repository": {
+  "type": "git",
+  "url": "https://github.com/SamuelzXu/samuelxu.git"
+},
+  "engines": {
+    "node": "4.4.5",
+    "npm": "2.15.5"}
+}
