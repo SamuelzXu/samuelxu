@@ -1,113 +1,14 @@
-jQuery(function($) {'use strict';
+var tStart = 0 // Start transition 100px from top
+  , tEnd = 400   // End at 500px
+  , cStart = [250, 195, 56]  // Gold
+  , cEnd = [0, 0, 0, 0]   // Transparent
+  , cDiff = [cEnd[0] - cStart[0], cEnd[1] - cStart[1], cEnd[2] - cStart[2]];
 
-	//Responsive Nav
-	$('li.dropdown').find('.fa-angle-down').each(function(){
-		$(this).on('click', function(){
-			if( $(window).width() < 768 ) {
-				$(this).parent().next().slideToggle();
-			}
-			return false;
-		});
-	});
-
-	//Fit Vids
-	if( $('#video-container').length ) {
-		$("#video-container").fitVids();
-	}
-
-	//Initiat WOW JS
-	new WOW().init();
-
-	// portfolio filter
-	$(window).load(function(){
-
-		$('.main-slider').addClass('animate-in');
-		$('.preloader').remove();
-		//End Preloader
-
-		if( $('.masonery_area').length ) {
-			$('.masonery_area').masonry();//Masonry
-		}
-
-		var $portfolio_selectors = $('.portfolio-filter >li>a');
-		
-		if($portfolio_selectors.length) {
-			
-			var $portfolio = $('.portfolio-items');
-			$portfolio.isotope({
-				itemSelector : '.portfolio-item',
-				layoutMode : 'fitRows'
-			});
-			
-			$portfolio_selectors.on('click', function(){
-				$portfolio_selectors.removeClass('active');
-				$(this).addClass('active');
-				var selector = $(this).attr('data-filter');
-				$portfolio.isotope({ filter: selector });
-				return false;
-			});
-		}
-
-	});
-
-
-	$('.timer').each(count);
-	function count(options) {
-		var $this = $(this);
-		options = $.extend({}, options || {}, $this.data('countToOptions') || {});
-		$this.countTo(options);
-	}
-		
-	// Search
-	$('.fa-search').on('click', function() {
-		$('.field-toggle').fadeToggle(200);
-	});
-
-	// Contact form
-	var form = $('#main-contact-form');
-	form.submit(function(event){
-		event.preventDefault();
-		var form_status = $('<div class="form_status"></div>');
-		$.ajax({
-			url: $(this).attr('action'),
-			beforeSend: function(){
-				form.prepend( form_status.html('<p><i class="fa fa-spinner fa-spin"></i> Email is sending...</p>').fadeIn() );
-			}
-		}).done(function(data){
-			form_status.html('<p class="text-success">Thanks for the inquiry. We will get back to you as soon as possible!</p>').delay(3000).fadeOut();
-		});
-	});
-
-	// Progress Bar
-	$.each($('div.progress-bar'),function(){
-		$(this).css('width', $(this).attr('data-transition')+'%');
-	});
-
-	if( $('#gmap').length ) {
-		var map;
-
-		map = new GMaps({
-			el: '#gmap',
-			lat: 43.04446,
-			lng: -76.130791,
-			scrollwheel:false,
-			zoom: 16,
-			zoomControl : false,
-			panControl : false,
-			streetViewControl : false,
-			mapTypeControl: false,
-			overviewMapControl: false,
-			clickable: false
-		});
-
-		map.addMarker({
-			lat: 43.04446,
-			lng: -76.130791,
-			animation: google.maps.Animation.DROP,
-			verticalAlign: 'bottom',
-			horizontalAlign: 'center',
-			backgroundColor: '#3e8bff',
-		});
-	}
-
+$(document).ready(function(){
+    $(document).scroll(function() {
+        var p = ($(this).scrollTop() - tStart) / (tEnd - tStart); // % of transition
+        p = Math.min(1, Math.max(0, p)); // Clamp to [0, 1]
+        var cBg = [Math.round(cStart[0] + cDiff[0] * p), Math.round(cStart[1] + cDiff[1] * p), Math.round(cStart[2] + cDiff[2] * p)];
+        $("body").css('background-color', 'rgb(' + cBg.join(',') +')');
+    });
 });
