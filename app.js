@@ -9,7 +9,7 @@ var bodyParser = require('body-parser');
 var mongo = require ('mongodb');
 var mongoose = require('mongoose');
 
-app.use(express.static(__dirname + '/public'));
+app.use(express.static(__dirname + '/app'));
 app.use(morgan('dev'));
 app.use(bodyParser.urlencoded({'extended' : 'true'}));
 app.use(bodyParser.json());
